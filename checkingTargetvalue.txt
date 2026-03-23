@@ -26,7 +26,7 @@ class Main {
         }
 
         if (!found) {
-            System.out.println("Element must be entered in target value ="+mid);
+            System.out.println("Element must be entered in target value ="+low);
         }
     }
 }
