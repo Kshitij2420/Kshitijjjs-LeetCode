@@ -1,0 +1,31 @@
+Type 1:
+class Solution {
+    public char nextGreatestLetter(char[] letters, char target) {
+        int low = 0, high = letters.length - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (letters[mid] > target) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        // Circular case
+        return letters[low % letters.length];
+    }
+}
+
+Type 2:
+class Solution {
+    public char nextGreatestLetter(char[] letters, char target) {
+        for(char letter : letters){
+            if(letter > target){
+                return letter;
+            }
+        }
+        return letters[0];
+    }
+}
