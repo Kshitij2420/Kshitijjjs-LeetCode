@@ -1,0 +1,32 @@
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        int ar[] = {2,3,7,9,20,21,23,24};
+        int low = 0, high = ar.length-1;
+        int mid=0;
+        int target;
+        boolean found = false;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter target Element");
+        target = sc.nextInt();
+        while (low <= high) {
+            mid = (low + high) / 2;
+            if (ar[mid] == target) {
+                System.out.println("Number found at index = " + mid);
+                found = true;
+                break;
+            } 
+            else if (ar[mid] > target) {
+                high = mid - 1;   
+            } 
+            else {
+                low = mid + 1;    
+            }
+        }
+
+        if (!found) {
+            System.out.println("Element must be entered in target value ="+mid);
+        }
+    }
+}
