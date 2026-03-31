@@ -1,0 +1,12 @@
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        double a = Math.sqrt(num);
+        if((Math.floor(a)-a)==0){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+}
