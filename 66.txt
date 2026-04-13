@@ -1,0 +1,21 @@
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int i;
+        int l = digits.length;
+
+        for (i = l - 1; i >= 0; i--) {
+
+            if (digits[i] < 9) {
+                digits[i] = digits[i] + 1;
+                return digits;
+            }
+
+            digits[i] = 0;
+        }
+
+        int[] result = new int[l + 1];
+        result[0] = 1;
+
+        return result;
+    }
+}
