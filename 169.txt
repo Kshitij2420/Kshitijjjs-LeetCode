@@ -1,0 +1,23 @@
+class Solution {
+    public int majorityElement(int[] nums) {
+        int max = 0;
+        int ans = nums[0];
+
+        for (int i : nums) {
+            int c = 0;
+
+            for (int j : nums) {
+                if (i == j) {
+                    c++;
+                }
+            }
+
+            if (c > max) {
+                max = c;
+                ans = i;
+            }
+        }
+
+        return ans;
+    }
+}
