@@ -1,3 +1,4 @@
+// the time complexity of this code is n square 
 class Solution {
     public int majorityElement(int[] nums) {
         int max = 0;
@@ -19,5 +20,27 @@ class Solution {
         }
 
         return ans;
+    }
+}
+
+// the time complexity of this algorithm is O(n)
+class Solution {
+    public int majorityElement(int[] nums) {
+        int count = 0;
+        int candidate = 0;
+
+        for(int num : nums){
+            if(count == 0){
+                candidate = num;
+            }
+
+            if(num == candidate){
+                count++;
+            } else {
+                count--;
+            }
+        }
+
+        return candidate;
     }
 }
