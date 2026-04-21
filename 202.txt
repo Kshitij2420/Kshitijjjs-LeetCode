@@ -1,3 +1,4 @@
+// done by flyod cycle detection
 class Solution {
     public boolean isHappy(int n) {
         int slow = n;
@@ -18,6 +19,33 @@ class Solution {
             sum += d * d;
             n /= 10;
         }
+        return sum;
+    }
+}
+// second approach 
+import java.util.HashSet;
+
+class Solution {
+    public boolean isHappy(int n) {
+        HashSet<Integer> seen = new HashSet<>();
+
+        while (n != 1 && !seen.contains(n)) {
+            seen.add(n);
+            n = getSquareSum(n);
+        }
+
+        return n == 1;
+    }
+
+    public int getSquareSum(int n) {
+        int sum = 0;
+
+        while (n > 0) {
+            int digit = n % 10;
+            sum += digit * digit;
+            n = n / 10;
+        }
+
         return sum;
     }
 }
