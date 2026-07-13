@@ -1,0 +1,29 @@
+class Solution {
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+
+        path.add(0);
+        backtrack(graph, 0, path, ans);
+
+        return ans;
+    }
+
+    private void backtrack(int[][] graph, int node,
+                           List<Integer> path,
+                           List<List<Integer>> ans) {
+
+        // Reached target node
+        if (node == graph.length - 1) {
+            ans.add(new ArrayList<>(path));
+            return;
+        }
+
+        // Explore all neighbors
+        for (int next : graph[node]) {
+            path.add(next);                    // Choose
+            backtrack(graph, next, path, ans); // Explore
+            path.remove(path.size() - 1);      // Unchoose (Backtrack)
+        }
+    }
+}
