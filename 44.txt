@@ -1,0 +1,68 @@
+class Solution {
+
+    Boolean[][] dp;
+
+    public boolean isMatch(String s, String p) {
+
+        int n = s.length();
+        int m = p.length();
+
+        dp = new Boolean[n + 1][m + 1];
+
+        return solve(s, p, 0, 0);
+    }
+
+    private boolean solve(String s, String p, int i, int j) {
+
+        // Both are completely finished
+        if (i == s.length() && j == p.length()) {
+            return true;
+        }
+
+        // Pattern finished but string is still remaining
+        if (j == p.length()) {
+            return false;
+        }
+
+        // String finished
+        if (i == s.length()) {
+
+            // Remaining pattern must contain only '*'
+            for (int k = j; k < p.length(); k++) {
+                if (p.charAt(k) != '*') {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // Already calculated
+        if (dp[i][j] != null) {
+            return dp[i][j];
+        }
+
+        char sChar = s.charAt(i);
+        char pChar = p.charAt(j);
+
+        // '*' case
+        if (pChar == '*') {
+
+            // '*' matches zero characters
+            boolean skipStar = solve(s, p, i, j + 1);
+
+            // '*' matches current character
+            boolean takeStar = solve(s, p, i + 1, j);
+
+            return dp[i][j] = skipStar || takeStar;
+        }
+
+        // Normal character or '?'
+        if (pChar == '?' || pChar == sChar) {
+            return dp[i][j] = solve(s, p, i + 1, j + 1);
+        }
+
+        // Characters don't match
+        return dp[i][j] = false;
+    }
+}
