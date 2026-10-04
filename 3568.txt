@@ -1,0 +1,61 @@
+import java.util.*;
+
+class Solution {
+    public int minMoves(String[] classroom, int energy) {
+        int m = classroom.length, n = classroom[0].length();
+        int[][] id = new int[m][n];
+        int sr = 0, sc = 0, litter = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                id[i][j] = -1;
+                char ch = classroom[i].charAt(j);
+                if (ch == 'S') { sr = i; sc = j; }
+                else if (ch == 'L') id[i][j] = litter++;
+            }
+        }
+        if (litter == 0) return 0;
+
+        int full = (1 << litter) - 1;
+        // best[r][c][mask] = max energy left when reaching this state
+        int[][][] best = new int[m][n][1 << litter];
+        for (int[][] a : best) for (int[] b : a) Arrays.fill(b, -1);
+
+        Queue<int[]> q = new ArrayDeque<>();
+        q.add(new int[]{sr, sc, 0, energy});
+        best[sr][sc][0] = energy;
+
+        int[] dr = {1, -1, 0, 0};
+        int[] dc = {0, 0, 1, -1};
+        int moves = 0;
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            moves++;
+            while (size-- > 0) {
+                int[] cur = q.poll();
+                int r = cur[0], c = cur[1], mask = cur[2], e = cur[3];
+                if (e == 0) continue; // cannot move without energy
+
+                for (int d = 0; d < 4; d++) {
+                    int nr = r + dr[d], nc = c + dc[d];
+                    if (nr < 0 || nc < 0 || nr >= m || nc >= n) continue;
+                    char ch = classroom[nr].charAt(nc);
+                    if (ch == 'X') continue;
+
+                    int ne = e - 1;
+                    int nmask = mask;
+                    if (ch == 'L') nmask |= (1 << id[nr][nc]);
+                    if (ch == 'R') ne = energy;
+
+                    if (nmask == full) return moves;
+                    if (best[nr][nc][nmask] >= ne) continue;
+
+                    best[nr][nc][nmask] = ne;
+                    q.add(new int[]{nr, nc, nmask, ne});
+                }
+            }
+        }
+        return -1;
+    }
+}
